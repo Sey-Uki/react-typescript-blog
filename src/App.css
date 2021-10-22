@@ -1,3 +1,15 @@
+
+* {
+  box-sizing: border-box;
+}
+
+button{
+  cursor: pointer;
+  background-color: unset;
+  outline: unset;
+  border: none;
+}
+
 .App {
   text-align: center;
 }

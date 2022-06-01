@@ -2,10 +2,11 @@ import React from "react";
 import "./AddPostForm.css";
 
 import { Form, Input, Button, Modal } from "antd";
+import { FormInputs } from "../BlogPage";
 
 interface MyProps {
-  handleAddFormHide: React.MouseEventHandler<HTMLButtonElement>,
-  addPost: any,
+  handleAddFormHide: () => void,
+  addPost: (values: FormInputs) => void,
   showAddForm: boolean
 }
 
@@ -16,21 +17,23 @@ export class AddPostForm extends React.Component<MyProps> {
         <Modal
           title="Новый пост"
           visible={this.props.showAddForm}
-          onCancel={(e: any) => this.props.handleAddFormHide(e)}
+          onCancel={this.props.handleAddFormHide}
           footer={false}
         >
-          <Form onFinish={(values) => this.props.addPost(values)}>
+          <Form onFinish={this.props.addPost} initialValues={{ title: '', description: '' }}>
             <Form.Item
               name="title"
+              label="Заголовок"
               rules={[{ required: true, message: "Введите название поста" }]}
             >
-              <Input placeholder="Заголовок" />
+              <Input />
             </Form.Item>
             <Form.Item
               name="description"
+              label="Описание"
               rules={[{ required: true, message: "Введите описание поста" }]}
             >
-              <Input.TextArea placeholder="Описание" />
+              <Input.TextArea />
             </Form.Item>
             <Form.Item>
               <Button block type="primary" htmlType="submit">

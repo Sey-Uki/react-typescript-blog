@@ -29,28 +29,31 @@ interface MyState {
   posts: Array<Post>
 }
 
-export class BlogPage extends React.Component {
-  state: MyState = {
+export class BlogPage extends React.Component<{}, MyState> {
+  state = {
     showAddForm: false,
     posts,
   };
 
-  handleAddFormShow() {
+  handleAddFormShow = () => {
     this.setState({
-      showAddForm: true,
+      showAddForm: true
     });
   }
 
-  handleAddFormHide() {
+  handleAddFormHide = () => {
     this.setState({
       showAddForm: false,
     });
   }
 
-  addPost(values: FormInputs) {
+
+  addPost = (values: FormInputs) => {
+
     const temp = [...this.state.posts];
+
     const newPost: Post = {
-      id: posts.length + 1,
+      id: temp.length + 1,
       title: values.title,
       description: values.description,
       liked: false,
@@ -64,7 +67,7 @@ export class BlogPage extends React.Component {
     this.handleAddFormHide();
   }
 
-  likePost(pos: number) {
+  likePost = (pos: number) => {
     const temp = [...this.state.posts];
     temp[pos].liked = !temp[pos].liked;
 
@@ -73,11 +76,10 @@ export class BlogPage extends React.Component {
     });
   }
 
-  deletePost(pos: number) {
+  deletePost = (pos: number) => {
     const temp = [...this.state.posts];
 
     const onOk = () => {
-      console.log("OK");
       temp.splice(pos, 1);
       this.setState((state: MyState) => {
         return { posts: temp };
@@ -92,9 +94,6 @@ export class BlogPage extends React.Component {
       okType: "danger",
       cancelText: "Нет",
       onOk,
-      onCancel() {
-        console.log("Cancel");
-      },
     });
   }
 
@@ -124,12 +123,15 @@ export class BlogPage extends React.Component {
             addPost={this.addPost}
           />
         )}
-        <h1>Simple Blog</h1>
-        <div className="addNewPost">
-          <Button type="primary" onClick={this.handleAddFormShow}>
-            Создать новый пост
-          </Button>
+        <div className="header">
+          <h1>Simple Blog</h1>
+          <div className="addNewPost">
+            <Button type="primary" onClick={this.handleAddFormShow}>
+              Создать новый пост
+            </Button>
+          </div>
         </div>
+
         <div className="posts">{blogPosts}</div>
       </div>
     );
